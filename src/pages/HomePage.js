@@ -37,6 +37,9 @@ export default function HomePage() {
             .then((res) => {
                 setPosts(res.data)
             })
+            .catch((err)=>{
+                alert(err.response.message)
+            })
 
     }, [])
 
@@ -58,8 +61,11 @@ export default function HomePage() {
                     {posts.map((post, index) => <Post key={index} likes={post.likes} img={post.image} description={post.description} date={post.createdAt}></Post>)}
                 </Posts>
             </HomePageContainer>
-            <Link to="/AddPost" >
+            <Link to="/addPost" >
                 <AddPost>+</AddPost>
+            </Link>
+            <Link to="/search">
+                <Search>+</Search>
             </Link>
         </>
     )
@@ -119,6 +125,17 @@ const AddPost = styled.button`
     position: fixed;
     bottom: 50px;
     left: 1550px;
+    border: 2px solid black;
+    font-size: 50px;
+`
+
+const Search = styled.button`
+    width: 80px;
+    height: 80px;
+    border-radius: 40px;
+    position: fixed;
+    bottom: 50px;
+    left: 1450px;
     border: 2px solid black;
     font-size: 50px;
 `

@@ -5,21 +5,23 @@ import SignUpPage from "./pages/SignUpPage";
 import HomePage from "./pages/HomePage";
 import styled from "styled-components";
 import AddPost from "./pages/AddPost";
+import SearchUser from "./pages/SearchUser";
 
 function App() {
   return (
     <>
-        <Top>Fomebook</Top>
-        <AuthorizationProvider>
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<SignInPage />} />
-              <Route path="/cadastro" element={<SignUpPage />} />
-              <Route path="/home" element={<HomePage />} />
-              <Route path="/AddPost" element={<AddPost />} />
-            </Routes>
-          </BrowserRouter>
-        </AuthorizationProvider>
+      <Top>Fomebook</Top>
+      <AuthorizationProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<SignInPage />} />
+            <Route path="/cadastro" element={<SignUpPage />} />
+            <Route path="/home" element={<HomePage />} />
+            <Route path="/addPost" element={<AddPost />} />
+            <Route path="/search" element={<SearchUser></SearchUser>} />
+          </Routes>
+        </BrowserRouter>
+      </AuthorizationProvider>
     </>
   );
 }
