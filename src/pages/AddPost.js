@@ -1,31 +1,37 @@
-import styled from "styled-components"
-import { Link, useNavigate } from "react-router-dom"
 import axios from "axios"
+import styled from "styled-components"
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 import useAuthorization from "../hooks/useAuthorization"
 
 
-export default function SignInPage() {
+export default function AddPost() {
 
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
+    const [foto, setFoto] = useState("")
+    const [descrição, setDescrição] = useState("")
     const navigate = useNavigate()
-    const { login } = useAuthorization()
+    const { authorization } = useAuthorization()
 
     function signIn(event) {
         event.preventDefault()
 
-        const promisse = axios.post(`${process.env.REACT_APP_API_URL}/signIn`, {
-            email: email,
-            password: password
-        })
+        const config = {
+            headers: {
+                "Authorization": `Bearer ${authorization.token}`
+            }
+        }
+
+        const promisse = axios.post(`${process.env.REACT_APP_API_URL}/addPost`, {
+            image: foto,
+            description: descrição
+        }, config)
 
         promisse.then((res) => {
-            login(res.data)
+            alert("Criado com sucesso")
             navigate("/home")
         })
         promisse.catch((err) => {
-            alert("Todos os campos são obrigatórios")
+            alert("Confira os dados")
         })
 
     }
@@ -33,16 +39,12 @@ export default function SignInPage() {
     return (
         <>
             <SingInContainer>
-                <Title>Login</Title>
+                <Title>Novo Post</Title>
                 <form onSubmit={signIn}>
-                    <input placeholder="E-mail" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-                    <input placeholder="Senha" type="password" autocomplete="new-password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                    <button type="submit">ENTRAR</button>
+                    <input placeholder="Foto" type="text" value={foto} onChange={(e) => setFoto(e.target.value)} />
+                    <input placeholder="Descrição" type="text" value={descrição} onChange={(e) => setDescrição(e.target.value)} />
+                    <button type="submit">CRIAR POST</button>
                 </form>
-
-                <Link to="/cadastro">
-                    Primeira vez? Cadastre-se!
-                </Link>
             </SingInContainer>
         </>
     )

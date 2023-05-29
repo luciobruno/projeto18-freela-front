@@ -1,16 +1,16 @@
 import axios from "axios"
 import styled from "styled-components"
 import useAuthorization from "../hooks/useAuthorization"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom"
 import { useEffect, useState } from "react"
 import Post from "../components/Post"
 
 export default function HomePage() {
 
-    const { authorization} = useAuthorization()
+    const { authorization } = useAuthorization()
     const navigate = useNavigate()
-    const [ user, setUser ] = useState({})
-    const [ posts, setPosts] = useState([])
+    const [user, setUser] = useState({})
+    const [posts, setPosts] = useState([])
 
     useEffect(() => {
         if (!authorization.token) {
@@ -27,14 +27,14 @@ export default function HomePage() {
         }
 
         axios.get(urlUser, config)
-            .then((res)=>{
+            .then((res) => {
                 setUser(res.data)
             })
-            .catch((err)=>{
+            .catch((err) => {
                 alert(err.response.message)
             })
         axios.get(urlPosts, config)
-            .then((res)=>{
+            .then((res) => {
                 setPosts(res.data)
             })
 
@@ -55,9 +55,12 @@ export default function HomePage() {
                     </Description>
                 </Profile>
                 <Posts>
-                    {posts.map((post,index)=><Post key={index} likes={post.likes} img={post.image} description={post.description} date={post.createdAt}></Post>)}
+                    {posts.map((post, index) => <Post key={index} likes={post.likes} img={post.image} description={post.description} date={post.createdAt}></Post>)}
                 </Posts>
             </HomePageContainer>
+            <Link to="/AddPost" >
+                <AddPost>+</AddPost>
+            </Link>
         </>
     )
 }
@@ -105,4 +108,17 @@ const Img = styled.img`
 `
 
 const Posts = styled.div`
+    display: flex;
+    flex-direction: column;
+`
+
+const AddPost = styled.button`
+    width: 80px;
+    height: 80px;
+    border-radius: 40px;
+    position: fixed;
+    bottom: 50px;
+    left: 1550px;
+    border: 2px solid black;
+    font-size: 50px;
 `
