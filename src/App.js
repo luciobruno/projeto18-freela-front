@@ -1,25 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { AuthorizationProvider } from "./context/AuthorizationContext";
+import SignInPage from "./pages/SignInPage";
+import SignUpPage from "./pages/SignUpPage";
+import HomePage from "./pages/HomePage";
+import styled from "styled-components";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+        <Top>Fomebook</Top>
+        <AuthorizationProvider>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<SignInPage />} />
+              <Route path="/cadastro" element={<SignUpPage />} />
+              <Route path="/home" element={<HomePage />} />
+            </Routes>
+          </BrowserRouter>
+        </AuthorizationProvider>
+    </>
   );
 }
 
 export default App;
+
+const Top = styled.div`
+    display: flex;
+    height: 60px;
+    width: 100vw;
+    font-size: 30px;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 50px;
+    border: 1px solid black;
+`
